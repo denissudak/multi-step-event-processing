@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.denissudak.eventprocessing.model.context.StepProcessingStatus.Status.*;
 
 
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class SaleEventProcessor {
         checkNotNull(event);
 
         EventProcessingContext processingContext = processingContextService.lockEventProcessing(event);
+
         Iterator<StepProcessingStatus> attemptedStepsIterator = processingContext.getStepProcessingStatuses().iterator();
         Iterator<ProcessingStep> processingStepIterator = processingSteps.iterator();
         boolean stepFailed = false;
@@ -37,13 +39,13 @@ public class SaleEventProcessor {
             if (!currentStep.getCode().equals(status.getStepCode())) {
                 throw new IllegalStateException("The step is " + currentStep.getCode() + ", but the previous attempt record is for step " + status.getStepCode());
             }
-            if (status.getStatus() == StepProcessingStatus.Status.PROCESSING) {
-                throw new IllegalStateException("command is already in the " + StepProcessingStatus.Status.PROCESSING + " state");
-            } else if (status.getStatus() != StepProcessingStatus.Status.SUCCESS) {
-                status.setStatus(StepProcessingStatus.Status.PROCESSING);
+            if (status.getStatus() == PROCESSING) {
+                throw new IllegalStateException("command is already in the " + PROCESSING + " state");
+            } else if (status.getStatus() != SUCCESS) {
+                status.setStatus(PROCESSING);
                 processingContextService.update(processingContext);
                 stepFailed = !currentStep.process(event, processingContext);
-                status.setStatus(stepFailed ? StepProcessingStatus.Status.TRY_AGAIN : StepProcessingStatus.Status.SUCCESS);
+                status.setStatus(stepFailed ? TRY_AGAIN : SUCCESS);
                 processingContextService.update(processingContext);
             }
         }

@@ -44,10 +44,10 @@ public class MainConfig {
             }
 
             @Override
-            public boolean process(SaleEvent event, EventProcessingContext state) {
+            public boolean process(SaleEvent event, EventProcessingContext context) {
                 UUID newInvoiceId = UUID.randomUUID();
-                System.out.println(getCode()+" step has created a new invoice with ID " + newInvoiceId);
-                state.setCreatedInvoiceId(newInvoiceId.toString());
+                System.out.println(getCode() + " step has created a new invoice with ID " + newInvoiceId);
+                context.setCreatedInvoiceId(newInvoiceId.toString());
                 return true;
             }
         };
@@ -62,8 +62,8 @@ public class MainConfig {
             }
 
             @Override
-            public boolean process(SaleEvent event, EventProcessingContext state) {
-                System.out.println(getCode()+" step has emailed invoice with ID " + state.getCreatedInvoiceId());
+            public boolean process(SaleEvent event, EventProcessingContext context) {
+                System.out.println(getCode() + " step has emailed invoice with ID " + context.getCreatedInvoiceId());
                 return true;
             }
         };

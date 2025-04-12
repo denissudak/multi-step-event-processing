@@ -1,6 +1,6 @@
 #!/bin/bash
 
-awslocal sqs create-queue --queue-name=salesQueue
+awslocal sqs create-queue --queue-name=sales
 
 awslocal dynamodb create-table \
     --table-name event_processing_context  \

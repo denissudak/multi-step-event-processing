@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "f39c4522-48b7-409b-a137-d0866571f05a",
+		"name": "Localstack SQS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5771419"
+	},
+	"item": [
+		{
+			"name": "ListQueues",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Credential=something/something/eu-west-2/",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-Amz-Date",
+						"value": "20230314T112526Z",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4566?Action=ListQueues",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4566",
+					"query": [
+						{
+							"key": "Action",
+							"value": "ListQueues"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SendMessage",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const body = {",
+							"    invoiceNumber: \"inv-2\",",
+							"    clientBusinessName: \"business\",",
+							"    totalDue: 100",
+							"};",
+							"",
+							"pm.globals.set(\"payload\", JSON.stringify(body));",
+							"console.log(JSON.stringify(body));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4566/000000000000/sales?Action=SendMessage&MessageBody={{payload}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4566",
+					"path": [
+						"000000000000",
+						"sales"
+					],
+					"query": [
+						{
+							"key": "Action",
+							"value": "SendMessage"
+						},
+						{
+							"key": "MessageBody",
+							"value": "{{payload}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PurgeQueue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4566/000000000000/sales?Action=PurgeQueue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4566",
+					"path": [
+						"000000000000",
+						"sales"
+					],
+					"query": [
+						{
+							"key": "Action",
+							"value": "PurgeQueue"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReceiveMessage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4566/000000000000/sales?Action=ReceiveMessage&MaxNumberOfMessages=10&VisibilityTimeout=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4566",
+					"path": [
+						"000000000000",
+						"sales"
+					],
+					"query": [
+						{
+							"key": "Action",
+							"value": "ReceiveMessage"
+						},
+						{
+							"key": "MaxNumberOfMessages",
+							"value": "10"
+						},
+						{
+							"key": "VisibilityTimeout",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

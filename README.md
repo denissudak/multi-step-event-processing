@@ -1,4 +1,4 @@
-This supporting code for my article – [How to build multi-step idempotent message processing](https://medium.com/@denissudak/how-to-build-multi-step-message-processing-72dd5c392050)
+This is the supporting code for my article – [How to build multi-step idempotent message processing](https://medium.com/@denissudak/how-to-build-multi-step-message-processing-72dd5c392050)
 
 [![Watch the code walkthrough video](https://img.youtube.com/vi/-7NUO6QRfss/0.jpg)](https://www.youtube.com/watch?v=-7NUO6QRfss)
 

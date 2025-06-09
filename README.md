@@ -1,4 +1,4 @@
-This is the supporting code for my article – [How to build multi-step message processing](https://denissudak.substack.com/p/how-to-build-multi-step-message-processing)
+This is the supporting code for my article – [How to build multi-step message processing](https://medium.com/@denissudak/how-to-build-multi-step-message-processing-72dd5c392050)
 
 ## Setup
 Start LocalStack on your machine
